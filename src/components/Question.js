@@ -5,7 +5,7 @@ function Question({ question, onAnswered }) {
 
   // add useEffect code
   useEffect(() => {
-    setTimeout(function () {
+    const timeID = setTimeout(function () {
       const remainingTime = timeRemaining - 1
       if (remainingTime === 0) {
         setTimeRemaining(10)
@@ -14,7 +14,11 @@ function Question({ question, onAnswered }) {
         setTimeRemaining(remainingTime)
       }
     }, 1000)
-  })
+
+    return function () {
+      clearTimeout(timeID)
+    }
+  }, [timeRemaining])
 
   function handleAnswer(isCorrect) {
     setTimeRemaining(10);
